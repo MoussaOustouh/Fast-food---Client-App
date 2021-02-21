@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fast_food.Views.ProductRequestPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:Fast_food.ViewModels"
+             xmlns:model="clr-namespace:Fast_food.Models.MyModels"
+             x:Name="BrowseProductRequestPage" 
+             BackgroundColor="White">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="trash.png" Command="{Binding DeleteProductCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame Margin="10, 20, 10, 20" Padding="5" HasShadow="False" BorderColor="#16c79a">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Entry Text="{Binding orderContent.quantity, Mode=TwoWay}" TextChanged="Entry_TextChanged" x:Name="QuantityEntry" TextColor="Black" Keyboard="Numeric" MaxLength="5" Placeholder="Quantity" HeightRequest="25" FontSize="20"></Entry>
+                    <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Margin="10, 2, 10, 2" VerticalOptions="Center">
+                        <Frame Padding="8, 0, 8, 0" Margin="0" HeightRequest="20" BorderColor="#00ffffff"  CornerRadius="20" BackgroundColor="#ffc107" HasShadow="False">
+                            <Label Text=" Dhs " FontSize="20" TextColor="Black"></Label>
+                        </Frame>
+                        <Label Text="0.00" x:Name="TotalePriceLabel" FontSize="20" TextColor="Black"></Label>
+                    </StackLayout>
+
+                    <Button Text="Save" Command="{Binding SaveProductCommand}" BackgroundColor="#16c79a" Padding="5" HeightRequest="30" CornerRadius="10" VerticalOptions="Center"  Grid.Column="2" Grid.Row="0"></Button>
+                </Grid>
+            </Frame>
+            <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" x:DataType="local:ProductRequestViewModel">
+                <Grid Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Frame Padding="10" CornerRadius="15" Grid.Row="0" Grid.Column="0" BorderColor="#ffcc29" BackgroundColor="white" HasShadow="False">
+                        <Image>
+                            <Image.Source>
+                                <MultiBinding StringFormat="{}{0}{1}">
+                                    <Binding Path="productsPicturesFolder" />
+                                    <Binding Path="product.picture" />
+                                </MultiBinding>
+                            </Image.Source>
+                        </Image>
+                    </Frame>
+
+                    <Label Text="{Binding product.title}" Grid.Row="1" Grid.Column="0"  FontSize="20" FontAttributes="Bold" TextColor="Black" Margin="10, 0, 10, 0"></Label>
+                    
+                    <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Margin="10, 0, 10, 0">
+                        <Frame Padding="8, 0, 8, 0" Margin="0" BorderColor="#00ffffff"  CornerRadius="10" BackgroundColor="#ffc107" HasShadow="False">
+                            <Label Text="Dhs" FontSize="15" TextColor="Black"></Label>
+                        </Frame>
+                        <Label Text="{Binding product.price, StringFormat='{0:0.00}'}" FontSize="15" TextColor="Black"></Label>
+                    </StackLayout>
+
+                    <Label Text="{Binding product.description}" Grid.Row="3" Grid.Column="0"  FontSize="15" TextColor="Gray" Margin="10"></Label>
+
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

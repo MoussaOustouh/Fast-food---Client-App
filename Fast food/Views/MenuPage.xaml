@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fast_food.Views.MenuPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:Fast_food.ViewModels"
+             xmlns:model="clr-namespace:Fast_food.Models.MyModels"
+             x:Name="BrowseMenuPage" 
+             BackgroundColor="White">
+
+    <StackLayout Orientation="Vertical"  x:DataType="local:MenuViewModel">
+        <Frame BorderColor="#e07ad0b9" Margin="10, 5, 10, 0" Padding="20, 5, 20, 0" CornerRadius="10" HasShadow="False">
+            <Picker x:Name="CategoryPicker" Title="Categorys" FontSize="20" TextColor="Black" 
+                    ItemsSource="{Binding pickerCategoryList}" SelectedIndex="{Binding pickedIndex, Mode=TwoWay}" 
+                    SelectedIndexChanged="CategoryPicker_SelectedIndexChanged">
+            </Picker>
+        </Frame>
+
+        <RefreshView x:DataType="local:MenuViewModel" Command="{Binding LoadDataCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView x:Name="MenuListView" ItemsSource="{Binding listProductsBinding}" SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate  x:DataType="model:Product">
+                        <Frame Padding="10, 10, 10, 0" BorderColor="#00ffffff" HasShadow="False">
+                            <StackLayout Orientation="Horizontal" Spacing="0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid  Grid.Row="0" Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="100"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Frame Padding="3" CornerRadius="25" HeightRequest="80" Grid.Row="0" Grid.Column="0" BorderColor="#ffcc29" BackgroundColor="white" HasShadow="False">
+                                            <Image Source="{Binding picture}"></Image>
+                                        </Frame>
+                                    </Grid>
+
+                                    <Frame Padding="5" Grid.Row="0" Grid.Column="1" BorderColor="#00ffffff" VerticalOptions="Center" HasShadow="False">
+                                        <StackLayout Orientation="Vertical">
+                                            <Label Text="{Binding title}" FontSize="15" FontAttributes="Bold" TextColor="Black"></Label>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Frame Padding="8, 0, 8, 0" Margin="0" BorderColor="#00ffffff"  CornerRadius="10" BackgroundColor="#ffc107" HasShadow="False">
+                                                    <Label Text="Dhs" FontSize="15" TextColor="Black"></Label>
+                                                </Frame>
+                                                <Label Text="{Binding price, StringFormat='{0:0.00}'}" FontSize="15" TextColor="Black"></Label>
+                                            </StackLayout>
+                                            <Label Text="{Binding description}" FontSize="15" TextColor="Gray"></Label>
+                                        </StackLayout>
+                                    </Frame>
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>

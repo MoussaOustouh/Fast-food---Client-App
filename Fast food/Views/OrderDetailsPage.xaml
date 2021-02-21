@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fast_food.Views.OrderDetailsPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:Fast_food.ViewModels"  
+             xmlns:model="clr-namespace:Fast_food.Models.MyModels"  
+             x:Name="BrowseOrderDetailsPage" 
+             BackgroundColor="White">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="checked.png" Command="{Binding ConfirmOrderCommand}"/>
+        <ToolbarItem IconImageSource="add.png" Command="{Binding AddProductCommand}"/>
+        <ToolbarItem IconImageSource="trash.png" Command="{Binding DeleteOrderCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+
+        <StackLayout Orientation="Vertical"  x:DataType="local:OrderDetailsViewModel" Padding="10">
+
+            <Grid Margin="0, 0, 0, 20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid  Grid.Row="0" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Frame Padding="3" CornerRadius="25" HeightRequest="80" Grid.Row="0" Grid.Column="0" BorderColor="#ffcc29" BackgroundColor="white" HasShadow="False">
+                        <Image Source="order_icon.png"></Image>
+                    </Frame>
+                </Grid>
+
+                <StackLayout Grid.Row="0" Grid.Column="1" >
+                    <Frame WidthRequest="3000" HeightRequest="0" Margin="0" Padding="0" HasShadow="False"></Frame>
+                    <Label Text="New order - Not submitted yet" FontSize="15" FontAttributes="Bold" TextColor="Black"></Label>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Total price :   " FontSize="15" FontAttributes="Bold" TextColor="Black"></Label>
+                        <Frame Padding="8, 0, 8, 0" Margin="0" BorderColor="#00ffffff"  CornerRadius="10" BackgroundColor="#ffc107" HasShadow="False">
+                            <Label Text="Dhs" FontSize="15" TextColor="Black"></Label>
+                        </Frame>
+                        <Label Text="{Binding orderFullInfo.totalPrice, StringFormat='{0:0.00}'}" FontSize="15" TextColor="Black"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+            
+
+
+            <RefreshView x:DataType="local:OrderDetailsViewModel" Command="{Binding LoadDataCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView x:Name="OrderContentsListView" ItemsSource="{Binding orderFullInfo.order_contents}" SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate  x:DataType="model:Order_content">
+                            <StackLayout  Padding="0, 10, 0, 10" BackgroundColor="White">
+                                <Frame Padding="10, 10, 10, 0" BorderColor="#D3D3D3" HasShadow="False">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="60"></ColumnDefinition>
+                                            <ColumnDefinition Width="30" ></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="{Binding productTitle, StringFormat='• {0}'}" Grid.Row="0" Grid.Column="0"></Label>
+                                        <Label Text="{Binding price, StringFormat='{0:0.00}'}" Grid.Row="0" Grid.Column="1"></Label>
+                                        <Label Text="{Binding quantity, StringFormat='x {0}'}" Grid.Row="0" Grid.Column="2"></Label>
+                                    </Grid>
+                                </Frame>
+
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrderDetailsViewModel}}, Path=ItemTapped}"		
+                                        CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fast_food.Views.SignInPage"
+             Title="Sing in"
+             xmlns:local="clr-namespace:Fast_food.ViewModels"
+             xmlns:model="clr-namespace:Fast_food.Models.MyModels"
+             x:Name="BrowseSignInPage" 
+             BackgroundColor="White">
+    
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="#00FFFFFF" x:DataType="local:AuthenticationViewModel">
+            <StackLayout Orientation="Vertical" Padding="30" Spacing="20">
+                <BoxView HeightRequest="1"/>
+                <Image HorizontalOptions="Center" WidthRequest="300" Source="bg_login.png"/>
+                <Frame  HasShadow="False" CornerRadius="20" BackgroundColor="#00FFFFFF">
+                    <StackLayout Orientation="Vertical" Spacing="10">
+                        <Entry x:Name="Email" Placeholder="Email"   
+                               PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                               Keyboard="Email"  
+                               TextColor="Black"
+                               MaxLength="50"
+                               ReturnType="Next"
+                               Text="{Binding user.email, Mode=TwoWay}"/>
+                        <Entry x:Name="Password" Placeholder="Password"
+                               PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                               IsPassword="True"  
+                               TextColor="Black"
+                               MaxLength="100"
+                               ReturnType="Go"
+                               Text="{Binding user.password, Mode=TwoWay}"/>
+
+                        <Button x:Name="ForgetPasswordButton"
+                            Text="Forgot your password" 
+                            TextColor="#2c3e50" 
+                            FontSize="14"
+                            
+                            HorizontalOptions="End"
+                            HeightRequest="20"
+                            Padding="0"
+                            BackgroundColor="#00FFFFFF"
+                            Command="{Binding SwitchToForgotPasswordCommand}"/>
+
+
+                        <Button x:Name="LoginButton"
+                            Text="Login" 
+                            TextColor="#fbf6f0" 
+                            BackgroundColor="#f58634"
+                            CornerRadius="20"
+                            Margin="0,20,0,0"
+                            Command="{Binding SingInCommand}"/>
+
+
+                    </StackLayout>
+                </Frame>
+
+                <Button x:Name="SignUpButton"
+                        Text="Sign up"
+                        TextColor="#fbf6f0" 
+                        BackgroundColor="#16c79a"
+                        CornerRadius="20"
+                        Margin="20,10,20,0"
+                        Command="{Binding SwitchToSingUpCommand}"/>
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>

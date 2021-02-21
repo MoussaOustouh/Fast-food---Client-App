@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fast_food.Views.OrdersPage" 
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:Fast_food.ViewModels"  
+             xmlns:model="clr-namespace:Fast_food.Models.MyModels"  
+             x:Name="BrowseOrdersPage" 
+             BackgroundColor="White">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddOrderCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout Orientation="Vertical"  x:DataType="local:OrdersViewModel">
+        <Frame BorderColor="#e07ad0b9" Margin="10, 5, 10, 0" Padding="20, 5, 20, 0" CornerRadius="10" HasShadow="False">
+            <Picker x:Name="StatePicker" Title="Orders states" FontSize="20" TextColor="Black" 
+                    ItemsSource="{Binding pickerStatesList}" SelectedIndex="{Binding pickedIndex, Mode=TwoWay}" 
+                    SelectedIndexChanged="StatePicker_SelectedIndexChanged">
+            </Picker>
+        </Frame>
+
+        <RefreshView x:DataType="local:OrdersViewModel" Command="{Binding LoadDataCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView x:Name="OrdersListView" ItemsSource="{Binding listOrdersBinding}" SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate  x:DataType="model:OrderFullInfo">
+                        <Frame Padding="10, 10, 10, 0" BorderColor="#00ffffff" HasShadow="False">
+                            <StackLayout  Orientation="Horizontal" Spacing="0">
+
+                                <Frame Padding="10, 5, 10, 10" Margin="0, 0, 0, 10" CornerRadius="10" BorderColor="#D3D3D3" VerticalOptions="Center" HasShadow="False" >
+                                    <StackLayout Orientation="Vertical">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="40"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid  Grid.Row="0" Grid.Column="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"></RowDefinition>
+                                                    <RowDefinition Height="*"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Frame Padding="3" CornerRadius="25" HeightRequest="80" Grid.Row="0" Grid.Column="0" BorderColor="#ffcc29" BackgroundColor="white" HasShadow="False">
+                                                    <Image Source="order_icon.png"></Image>
+                                                </Frame>
+                                            </Grid>
+
+                                            <StackLayout Grid.Row="0" Grid.Column="1" >
+                                                <Frame WidthRequest="3000" HeightRequest="0" Margin="0" Padding="0" HasShadow="False"></Frame>
+                                                <Label Text="New order - Not submitted yet" IsVisible="{Binding orderVisibility.newOrders}" FontSize="15" FontAttributes="Bold" TextColor="Black"></Label>
+                                                <Label Text="{Binding order_datetime}" IsVisible="{Binding orderVisibility.showOrdersDateTime}" FontSize="15" FontAttributes="Bold" TextColor="Black"></Label>
+
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Total price :   " FontSize="15" FontAttributes="Bold" TextColor="Black"></Label>
+                                                    <Frame Padding="8, 0, 8, 0" Margin="0" BorderColor="#00ffffff"  CornerRadius="10" BackgroundColor="#ffc107" HasShadow="False">
+                                                        <Label Text="Dhs" FontSize="15" TextColor="Black"></Label>
+                                                    </Frame>
+                                                    <Label Text="{Binding totalPrice, StringFormat='{0:0.00}'}" FontSize="15" TextColor="Black"></Label>
+                                                </StackLayout>
+                                            </StackLayout>
+
+                                        </Grid>
+
+
+                                        <StackLayout BindableLayout.ItemsSource="{Binding order_contents}" Spacing="0">
+                                            <BindableLayout.ItemTemplate>
+                                                <DataTemplate x:DataType="model:Order_content">
+                                                    <StackLayout>
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="auto"></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                                <ColumnDefinition Width="60"></ColumnDefinition>
+                                                                <ColumnDefinition Width="30" ></ColumnDefinition>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <Label Text="{Binding productTitle, StringFormat='• {0}'}" Grid.Row="0" Grid.Column="0"></Label>
+                                                            <Label Text="{Binding price, StringFormat='{0:0.00}'}" Grid.Row="0" Grid.Column="1"></Label>
+                                                            <Label Text="{Binding quantity, StringFormat='x {0}'}" Grid.Row="0" Grid.Column="2"></Label>
+                                                        </Grid>
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </BindableLayout.ItemTemplate>
+                                        </StackLayout>
+
+
+                                        <Grid IsVisible="{Binding orderVisibility.showDeliveryMen}" Margin="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="20"></RowDefinition>
+                                                <RowDefinition Height="auto"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="40"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackLayout Orientation="Horizontal"  Grid.Row="0" Grid.Column="0">
+                                                <Label Text="Order code :  " FontSize="15" TextColor="Black"></Label>
+                                                <Label Text="{Binding order_code}" FontSize="15" FontAttributes="Bold" TextColor="Black"></Label>
+                                            </StackLayout>
+
+                                            <StackLayout Grid.Row="1" Grid.Column="0" >
+                                                <Label Text="{Binding delivery_man.firstname, StringFormat='Delivery man :  {0}'}" FontSize="15" FontAttributes="Italic" TextColor="Black"></Label>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="20"></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="20"></ColumnDefinition>
+                                                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Source="{Binding delivery_man.transport}" Grid.Row="0" Grid.Column="0"></Image>
+                                                    <Label Text="{Binding delivery_man.matricule, StringFormat=':  {0}'}"  FontSize="15" TextColor="Black" Grid.Row="0" Grid.Column="1"></Label>
+                                                    <Label Text="{Binding delivery_man.phone}"  FontSize="15" TextColor="#0a66c2" Grid.Row="0" Grid.Column="2"></Label>
+                                                </Grid>
+                                            </StackLayout>
+
+                                            <Grid  Grid.Row="1" Grid.Column="1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"></RowDefinition>
+                                                    <RowDefinition Height="*"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Frame Padding="3" CornerRadius="10" HeightRequest="80" Grid.Row="0" Grid.Column="0" BorderColor="#ffcc29" BackgroundColor="white" HasShadow="False">
+                                                    <Image Source="{Binding delivery_man.photo}"></Image>
+                                                </Frame>
+                                            </Grid>
+
+                                        </Grid>
+
+
+                                        <StackLayout Orientation="Horizontal" IsVisible="{Binding orderVisibility.ordersDelivred}">
+                                            <Label Text="Received at :  " FontSize="15" TextColor="Black"></Label>
+                                            <Label Text="{Binding received_datetime}" FontSize="15" FontAttributes="Bold" TextColor="Black"></Label>
+                                        </StackLayout>
+
+                                    </StackLayout>
+                                </Frame>
+
+
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=OrderTapped}"		
+                                        CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>

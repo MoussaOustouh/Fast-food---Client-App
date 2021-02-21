@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fast_food.Views.ProfilPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:Fast_food.ViewModels"  
+             xmlns:model="clr-namespace:Fast_food.Models"  
+             x:Name="BrowseProfilPage" 
+             BackgroundColor="White">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="logout.png" Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
+
+
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="#00FFFFFF" x:DataType="local:ProfilViewModel">
+            <StackLayout Padding="10">
+                <Image HorizontalOptions="Center" WidthRequest="200">
+                    <Image.Source>
+                        <MultiBinding StringFormat="{}{0}{1}">
+                            <Binding Path="clientsPicturesFolder" />
+                            <Binding Path="photo" />
+                        </MultiBinding>
+                    </Image.Source>
+                </Image>
+
+
+                <StackLayout Orientation="Vertical" Padding="30" Margin="0, 20, 0, 0" Spacing="20">
+                    <Entry x:Name="FirstName" Placeholder="First name"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    Keyboard="Text"
+                    MaxLength="30"
+                    TextColor="Black"
+                    ReturnType="Next"
+                    Text="{Binding firstname, Mode=TwoWay}"/>
+
+                    <Entry x:Name="LastName" Placeholder="Last name"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    Keyboard="Text"
+                    MaxLength="30"
+                    TextColor="Black"
+                    ReturnType="Next"
+                    Text="{Binding lastname, Mode=TwoWay}"/>
+
+                    <StackLayout Orientation="Horizontal">
+                        <RadioButton x:Name="Male" Text="Male" GroupName="Gender" IsChecked="{Binding IsMale, Mode=TwoWay}" Margin="0,0,40,0"/>
+                        <RadioButton x:Name="Female" Text="Female"  GroupName="Gender" IsChecked="{Binding IsFemale, Mode=TwoWay}"/>
+                    </StackLayout>
+
+                    <Entry x:Name="Email" Placeholder="Email"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    Keyboard="Email"
+                    MaxLength="50"
+                    TextColor="Black"
+                    ReturnType="Next"
+                    Text="{Binding email, Mode=TwoWay}"/>
+
+                    <Entry x:Name="Phone" Placeholder="+212612345678"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    Keyboard="Telephone"
+                    MaxLength="16"
+                    TextColor="Black"
+                    ReturnType="Go"
+                    Text="{Binding phone, Mode=TwoWay}"/>
+
+                    <Entry x:Name="Password" Placeholder="Password"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    IsPassword="True"  
+                    TextColor="Black"
+                    MaxLength="100"
+                    ReturnType="Next"
+                    Text="{Binding password, Mode=TwoWay}"/>
+
+
+
+                    <Button x:Name="SaveInfo"
+                    Text="Save" 
+                    TextColor="#fbf6f0" 
+                    BackgroundColor="#f58634"
+                    CornerRadius="20"
+                    Margin="0,20,0,0"
+                    Command="{Binding ChangeInfoCommand}"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Vertical" Padding="30" Margin="0, 20, 0, 0" Spacing="20">
+                    <Entry x:Name="OldPassword" Placeholder="Password"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    IsPassword="True"  
+                    TextColor="Black"
+                    MaxLength="100"
+                    ReturnType="Next"
+                    Text="{Binding password1, Mode=TwoWay}"/>
+
+                    <Entry x:Name="NewPassword" Placeholder="Old password"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    IsPassword="True"  
+                    TextColor="Black"
+                    MaxLength="100"
+                    ReturnType="Next"
+                    Text="{Binding password2, Mode=TwoWay}"/>
+
+                    <Button x:Name="ChangePasswordButton"
+                    Text="Chenge the password" 
+                    TextColor="#fbf6f0" 
+                    BackgroundColor="#f58634"
+                    CornerRadius="20"
+                    Margin="0,20,0,0"
+                    Command="{Binding ChangePasswordCommand}"/>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>

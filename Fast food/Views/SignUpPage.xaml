@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fast_food.Views.SignUpPage"
+             Title="Sing up"
+             xmlns:local="clr-namespace:Fast_food.ViewModels"
+             xmlns:model="clr-namespace:Fast_food.Models.MyModels"
+             x:Name="BrowseSignUpPage" 
+             BackgroundColor="White">
+    
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="#00FFFFFF" x:DataType="local:AuthenticationViewModel">
+            <StackLayout Orientation="Vertical" Padding="30" Spacing="20">
+                <Image HorizontalOptions="Center" WidthRequest="200" Source="bg_login.png"/>
+
+                <Entry x:Name="FirstName" Placeholder="First name"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    Keyboard="Text"
+                    MaxLength="30"
+                    TextColor="Black"
+                    ReturnType="Next"
+                    Text="{Binding user.firstname, Mode=TwoWay}"/>
+
+                <Entry x:Name="LastName" Placeholder="Last name"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    Keyboard="Text"
+                    MaxLength="30"
+                    TextColor="Black"
+                    ReturnType="Next"
+                    Text="{Binding user.lastname, Mode=TwoWay}"/>
+
+                <StackLayout Orientation="Horizontal">
+                    <RadioButton x:Name="Male" Text="Male" GroupName="Gender" IsChecked="{Binding IsMale, Mode=TwoWay}" Margin="0,0,40,0"/>
+                    <RadioButton x:Name="Female" Text="Female"  GroupName="Gender" IsChecked="{Binding IsFemale, Mode=TwoWay}"/>
+                </StackLayout>
+
+                <Entry x:Name="Email" Placeholder="Email"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    Keyboard="Email"
+                    MaxLength="50"
+                    TextColor="Black"
+                    ReturnType="Next"
+                    Text="{Binding user.email, Mode=TwoWay}"/>
+
+                <Entry x:Name="Password" Placeholder="Password"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    IsPassword="True"  
+                    TextColor="Black"
+                    MaxLength="100"
+                    ReturnType="Next"
+                    Text="{Binding user.password, Mode=TwoWay}"/>
+
+
+                <Entry x:Name="Phone" Placeholder="+212612345678"   
+                    PlaceholderColor="#C8C8C8" HeightRequest="40"   
+                    Keyboard="Telephone"
+                    MaxLength="16"
+                    TextColor="Black"
+                    ReturnType="Go"
+                    Text="{Binding user.phone, Mode=TwoWay}"/>
+
+
+                <Button x:Name="SignUpButton"
+                    Text="Sign up" 
+                    TextColor="#fbf6f0" 
+                    BackgroundColor="#f58634"
+                    CornerRadius="20"
+                    Margin="0,20,0,0"
+                    Command="{Binding SingUpCommand}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
